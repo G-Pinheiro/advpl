@@ -8,10 +8,10 @@
 +------------------+---------------------------------------------------------+
 !Data de Criacao   !    01/04/2021                                           !
 +------------------+---------------------------------------------------------+
-!Descrição         !    Programa para efetuar a leitura do relatório das     !
-!                  !    dimensões dos produtos                               !
+!DescriÃ§Ã£o         !    Programa para efetuar a leitura do relatÃ³rio das     !
+!                  !    dimensÃµes dos produtos                               !
 +------------------+---------------------------------------------------------+
-!Observação        !                                                         !
+!ObservaÃ§Ã£o        !                                                         !
 +------------------+---------------------------------------------------------+
 */
 
@@ -19,22 +19,22 @@ user function GFGLCSV()
 
     local cArquivo              // Captura arquivo CSV selecionado
     local nHandle := 0          // Trabalha com o CSV Recebido
-    local nHandle2 := 0         // Trabalha na geração de txt de codigos não encontrados
-    local lPrimLinha := .T.     // Verificação de cabeçalho
-    local aCampos := []         // Array cabeçalho
+    local nHandle2 := 0         // Trabalha na geraÃ§Ã£o de txt de codigos nÃ£o encontrados
+    local lPrimLinha := .T.     // VerificaÃ§Ã£o de cabeÃ§alho
+    local aCampos := []         // Array cabeÃ§alho
     local aDados := array(0)    // Array com os dados
     local cLinha                // Utilizado para leitura de linha por linha
-    local nfor                  // Utilizado para Laço por linha
-    local nforh                 // Utilizado para Laço por linha
-    local aCodne := array(0)    // Array para codigos não encontrados
-    local cLocal :=             'c:\temp\Codigos Nao Encontrados.csv'  // Local para salvar csv com codigos não encontrados
+    local nfor                  // Utilizado para LaÃ§o por linha
+    local nforh                 // Utilizado para LaÃ§o por linha
+    local aCodne := array(0)    // Array para codigos nÃ£o encontrados
+    local cLocal :=             'c:\temp\Codigos Nao Encontrados.csv'  // Local para salvar csv com codigos nÃ£o encontrados
     local nQtCod := 0           // Conta quantos codigos foram importados
     local nQtCodne := 0         // Conta quantos codigos nao foram importados
     local nQtTotal := 0         // Conta total de codigos lidos
     local nDfor
     local nDfor2
 
-    // Seleção do arquivo CSV e leitura
+    // SeleÃ§Ã£o do arquivo CSV e leitura
     cArquivo := cGetFile( 'Arquivo CSV|*.csv',;                   //[ cMascara], 
                          'Selecao de Arquivos',;                  //[ cTitulo], 
                          0,;                                      //[ nMascpadrao], 
@@ -54,13 +54,12 @@ user function GFGLCSV()
     FT_FGOTOP()
 
     while ! FT_FEOF()
-        IncProc("Lendo o arquivo CSV...")
         cLinha := FT_FREADLN()
-        if lPrimLinha   // Se for primeira linha, cria cabeçalho.
+        if lPrimLinha   // Se for primeira linha, cria cabeÃ§alho.
             aCampos := Separa(cLinha,';',.T.)
             lPrimLinha := .F.
         else
-            AADD(aDados,Separa(cLinha,";",.T.)) // Foi necessario declarar a variavel Adados := Array(0), utilizando [] não funcionou
+            AADD(aDados,Separa(cLinha,";",.T.)) // Foi necessario declarar a variavel Adados := Array(0), utilizando [] nÃ£o funcionou
         endif
         FT_FSKIP()
     enddo
@@ -76,17 +75,16 @@ user function GFGLCSV()
     next
 
     // SB5010
-    //Compara com arquivo do BD e atualiza os valores, cria txt com os codigos não encontrados.
+    //Compara com arquivo do BD e atualiza os valores, cria txt com os codigos nÃ£o encontrados.
     Begin Transaction
-        AADD(aCodne, {'Codigo', 'Motivo'}) // Cria cabeçalho para codigos não encontrados ou inconsistentes
-        for nfor := 1 to len(aDados) // Laço Linha
-            IncProc("Importando os registros...")
+        AADD(aCodne, {'Codigo', 'Motivo'}) // Cria cabeÃ§alho para codigos nÃ£o encontrados ou inconsistentes
+        for nfor := 1 to len(aDados) // LaÃ§o Linha
             dbSelectArea("SB5")
             SB5->(dbSetOrder(1)) //B5_FILIAL+B5_COD
             SB5->(dbGoTop())
             if SB5->(dbSeek(xFilial('SB5')+aDados[nfor,2])) // Inclui dados nas colunas
-                Reclock("SB5",.F.) // F = Alteração     T = Inclusão
-                // Checa se o valor do CSV está zerado ou vazio e caso sim, não preenche a tabela
+                Reclock("SB5",.F.) // F = AlteraÃ§Ã£o     T = InclusÃ£o
+                // Checa se o valor do CSV estÃ¡ zerado ou vazio e caso sim, nÃ£o preenche a tabela
                 IIF(!aDados[nfor,6] = '', SB5->B5_COMPR   :=  val(aDados[nfor,6]),;
                 AADD(aCodne, {aDados[nfor,2], 'Valor inconsistente B5_COMPR'}))
                 IIF(!aDados[nfor,7] = '', SB5->B5_LARG    :=  Val(aDados[nfor,7]),;
@@ -112,14 +110,13 @@ user function GFGLCSV()
 
     Begin Transaction
 
-        for nfor := 1 to len(aDados) // Laço Linha
-            IncProc("Importando os registros...")
+        for nfor := 1 to len(aDados) // LaÃ§o Linha
             dbSelectArea("SB1")
             SB1->(dbSetOrder(1)) //B1_FILIAL+B1_COD
             SB1->(dbGoTop())
             if SB1->(dbSeek(xFilial('SB1')+aDados[nfor,2])) // Inclui dados nas colunas
-                Reclock("SB1",.F.) // F = Alteração     T = Inclusão
-                // Checa se o valor do CSV está zerado ou vazio e caso sim, não preenche a tabela
+                Reclock("SB1",.F.) // F = AlteraÃ§Ã£o     T = InclusÃ£o
+                // Checa se o valor do CSV estÃ¡ zerado ou vazio e caso sim, nÃ£o preenche a tabela
                 IIF(!aDados[nfor,3] = '', SB1->B1_COMP03  :=  val(aDados[nfor,3]),;
                 AADD(aCodne, {aDados[nfor,2], 'Valor inconsistente B1_COMP03'}))
                 IIF(!aDados[nfor,4] = '', SB1->B1_LARG03  :=  Val(aDados[nfor,4]),;
@@ -133,20 +130,20 @@ user function GFGLCSV()
         SB1->(DBCloseArea())
     End Transaction
 
-    // Se o array aCodne for preenchido Utiliza o array para gravar os codigos não encontrados em um arquivo txt
+    // Se o array aCodne for preenchido Utiliza o array para gravar os codigos nÃ£o encontrados em um arquivo txt
     if len(aCodne) > 1
         nHandle2 := fcreate(cLocal, FC_NORMAL)
         if nHandle2 < 0
             alert("Erro de leitura: "+cValToChar(ferror())+ 'Consulte a lista de erros no TDN.')
         else
-            for nforh := 1 to len(aCodne) // Laço Linha
+            for nforh := 1 to len(aCodne) // LaÃ§o Linha
                 fwrite(nHandle2, aCodne[nforh,1]+';'+aCodne[nforh,2])
                 fwrite(nHandle2, CRLF)
             next
         endif
         fclose(nHandle2)
         nQtTotal := nQtCod + nQtCodne
-        MsgInfo("Registros importados, alguns codigos não foram encontrados"+Chr(13)+Chr(10)+;
+        MsgInfo("Registros importados, alguns codigos nÃ£o foram encontrados"+Chr(13)+Chr(10)+;
         " ou houve conflito entre valores e foram salvos em ";
         +Chr(13)+Chr(10)+upper(cLocal);
         +Chr(13)+Chr(10)+"Cods processados: "+cValToChar(nQtCod);
