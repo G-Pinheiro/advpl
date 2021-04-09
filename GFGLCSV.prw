@@ -65,7 +65,7 @@ user function GFGLCSV()
     enddo
     fclose(nHandle)
 
-    // Preenche com '' os campos vazios do aDados
+    // Preenche com '' os campos zerados do aDados
     for nDfor := 1 to len(aDados) // for linha
         for nDfor2 := 3 to len(aDados[nDfor]) // for coluna
             if aDados[nDfor,nDfor2] = '0'
