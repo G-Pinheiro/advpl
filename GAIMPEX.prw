@@ -16,7 +16,7 @@
 +------------------+------------------------------------------------------------------------------------+
 */
 
-user function FGAIMPEX()
+user function GAIMPEX()
     local aArea := GetArea()
     local cArquivo := "C:\temp\Analise Importacao.xml"
     local cQuery := ""
