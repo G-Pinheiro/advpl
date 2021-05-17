@@ -18,6 +18,7 @@
 
 user function GAIMPEX()
     local aArea := GetArea()
+    //cArquivo está fixo em c:\temp devido a uma politica interna, considere usar GetTempPath() ou outra tratativa
     local cArquivo := "C:\temp\Analise Importacao.xml"
     local cQuery := ""
     local dPerIni
