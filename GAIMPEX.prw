@@ -5,14 +5,14 @@
 
 /*
 +------------------+------------------------------------------------------------------------------------+
-!Autor             ! Giulliano Pinheiro 	                                                              !
+!Autor             ! Giulliano Pinheiro                                                                 !
 +------------------+------------------------------------------------------------------------------------+
 !Data de Criacao   ! 19/01/2021                                                                         !
 +------------------+------------------------------------------------------------------------------------+
 !Descricão         ! Gera Relatorio de analise importacao através de uma query usando filtros de datas, !
-                   ! salva em xml e abre para o usuario. Usei Parambox com FWPreparedStatement para     !
-                   ! tratar os parametros na tcquery. Com pequenas adaptações, pode ser automátizado    !
-                   ! para enviar por email ou gerar em uma pasta, etc                                   !
+!                   ! salva em xml e abre para o usuario. Usei Parambox com FWPreparedStatement para    !
+!                   ! tratar os parametros na tcquery. Com pequenas adaptações, pode ser automátizado   !
+!                   ! para enviar por email ou gerar em uma pasta, etc                                  !
 +------------------+------------------------------------------------------------------------------------+
 */
 
