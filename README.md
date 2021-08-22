@@ -8,3 +8,5 @@ Sugestão: Criar um verificador para checar a existencia da pasta temp para cria
 2 GAIMPEX - Gera Relatorio através de uma query usando filtros de datas, salva em xml e abre para o usuario. Usei Parambox com FWPreparedStatement para
 tratar os parametros na tcquery. Com pequenas adaptações, pode ser automátizado, enviar por email, gerar em uma pasta, etc.
 É possível deixa-lo genérico e transforma-lo em uma pequena e específica função genérica.
+
+3 zgbrwtest - Browse de testes com FWBrowse e FWTemporaryTable para servir de exemplo e ajuda na hora de criar ou substituir um criatrab por exemplo, criado com base no exemplo do mestre Daniel Atilio https://terminaldeinformacao.com/
